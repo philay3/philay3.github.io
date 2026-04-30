@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab Notebook · Next Chapter</title>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-bg">
+    <header class="masthead">
+      <h1 class="masthead-title">Lab Notebook</h1>
+      <p class="masthead-sub">Next Chapter · Chops</p>
+    </header>
+
+    <div class="nb-stage">
+      <h2 class="sr-only">
+        Interactive lab notebook. Use the day tabs at the top to navigate between days,
+        and the previous and next buttons (or left and right arrow keys) to flip pages.
+      </h2>
+
+      <nav class="nb-tabs" id="nb-tabs" aria-label="Days"></nav>
+
+      <div class="nb-frame">
+        <div class="nb-bind" aria-hidden="true">
+          <span class="nb-ring"></span><span class="nb-ring"></span><span class="nb-ring"></span>
+          <span class="nb-ring"></span><span class="nb-ring"></span><span class="nb-ring"></span>
+          <span class="nb-ring"></span><span class="nb-ring"></span><span class="nb-ring"></span>
+          <span class="nb-ring"></span><span class="nb-ring"></span><span class="nb-ring"></span>
+        </div>
+
+        <div class="nb-page-area" id="nb-page-area">
+          <article class="nb-page" id="nb-page" aria-live="polite"></article>
+        </div>
+      </div>
+
+      <div class="nb-controls">
+        <button class="nb-btn" id="nb-prev" type="button" aria-label="Previous page">← prev</button>
+        <span class="nb-counter" id="nb-counter" aria-live="polite">1 / 1</span>
+        <button class="nb-btn" id="nb-next" type="button" aria-label="Next page">next →</button>
+      </div>
+    </div>
+
+    <footer class="footnote">
+      <p>Hand-stitched in Philadelphia · view source for how it works</p>
+    </footer>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="notebook.js"></script>
+</body>
+</html>

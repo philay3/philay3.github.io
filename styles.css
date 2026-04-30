@@ -1,0 +1,436 @@
+/* =========================================================
+   Lab Notebook — styles
+   Color tokens, notebook surface, tabs, and page-flip motion
+   ========================================================= */
+
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/caveat@latest/latin-400-normal.woff2) format('woff2'),
+       url(https://cdn.jsdelivr.net/fontsource/fonts/caveat@latest/latin-400-normal.woff) format('woff');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/caveat@latest/latin-700-normal.woff2) format('woff2'),
+       url(https://cdn.jsdelivr.net/fontsource/fonts/caveat@latest/latin-700-normal.woff) format('woff');
+}
+@font-face {
+  font-family: 'Patrick Hand';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/patrick-hand@latest/latin-400-normal.woff2) format('woff2'),
+       url(https://cdn.jsdelivr.net/fontsource/fonts/patrick-hand@latest/latin-400-normal.woff) format('woff');
+}
+
+:root {
+  /* Page background (the desk the notebook sits on) */
+  --bg: #efe9dc;
+  --bg-deep: #d9d1bd;
+
+  /* Notebook paper */
+  --paper: #fbf6e8;
+  --paper-edge: #e6dfca;
+  --rule-line: #bdd0db;
+  --margin-line: #d97c7c;
+
+  /* Inks */
+  --ink-me: #1f3b5e;     /* Chops — navy ballpoint */
+  --ink-ai: #1d6b54;     /* AI — green pen */
+  --ink-soft: #6c7d92;   /* muted notes / asides */
+
+  /* Highlighters */
+  --hl-yellow: rgba(255, 222, 89, 0.55);
+  --hl-pink:   rgba(255, 145, 180, 0.42);
+
+  /* Binding / chrome */
+  --bind: #2a2520;
+  --ring: #d6d3cb;
+  --ring-edge: #1c1815;
+
+  /* Tabs */
+  --tab-bg: #c2b896;
+  --tab-bg-hover: #b8ad84;
+  --tab-active: #fbf6e8;
+  --tab-text: #4a3f24;
+
+  /* UI controls */
+  --ctrl-bg: #ffffff;
+  --ctrl-border: rgba(31, 59, 94, 0.25);
+  --ctrl-text: #1f3b5e;
+  --ctrl-bg-hover: #f4eeda;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink-me);
+  font-family: 'Patrick Hand', 'Bradley Hand', 'Comic Sans MS', cursive;
+  min-height: 100vh;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.page-bg {
+  min-height: 100vh;
+  padding: 2rem 1rem 3rem;
+  background-image:
+    radial-gradient(ellipse at top, rgba(255,255,255,0.5) 0%, transparent 60%),
+    repeating-linear-gradient(45deg, transparent 0 22px, rgba(0,0,0,0.012) 22px 24px);
+}
+
+/* ---------- Masthead ---------- */
+.masthead {
+  text-align: center;
+  margin: 0 auto 2rem;
+  max-width: 720px;
+}
+.masthead-title {
+  font-family: 'Caveat', cursive;
+  font-size: 48px;
+  margin: 0 0 4px;
+  color: var(--ink-me);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+.masthead-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ---------- Stage / frame ---------- */
+.nb-stage {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ---------- Day tabs ---------- */
+.nb-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 16px;
+  margin-bottom: -2px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 3;
+}
+.nb-tab {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  background: var(--tab-bg);
+  color: var(--tab-text);
+  border: none;
+  padding: 8px 18px 12px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, padding 0.15s;
+  font-weight: 400;
+  position: relative;
+  top: 4px;
+}
+.nb-tab:hover:not(.active) {
+  background: var(--tab-bg-hover);
+  top: 2px;
+}
+.nb-tab.active {
+  background: var(--tab-active);
+  color: var(--ink-me);
+  top: 0;
+  padding-bottom: 14px;
+  font-weight: 700;
+  z-index: 2;
+}
+.nb-tab.placeholder {
+  opacity: 0.65;
+  font-style: italic;
+}
+
+/* ---------- Notebook frame ---------- */
+.nb-frame {
+  position: relative;
+  border-radius: 6px 6px 8px 8px;
+  background: var(--paper);
+  border: 1px solid var(--paper-edge);
+}
+
+.nb-bind {
+  background: var(--bind);
+  border-radius: 6px 6px 0 0;
+  padding: 8px 18px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 28px;
+  position: relative;
+  z-index: 2;
+}
+.nb-ring {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--ring);
+  border: 1.5px solid var(--ring-edge);
+  flex-shrink: 0;
+}
+
+.nb-page-area {
+  position: relative;
+  background: var(--paper);
+  border-radius: 0 0 6px 6px;
+  min-height: 580px;
+  perspective: 1500px;
+}
+
+/* ---------- Page ---------- */
+.nb-page {
+  padding: 36px 28px 32px 68px;
+  font-family: 'Patrick Hand', 'Bradley Hand', cursive;
+  color: var(--ink-me);
+  font-size: 19px;
+  line-height: 32px;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    var(--rule-line) 31px,
+    var(--rule-line) 32px
+  );
+  background-position: 0 36px;
+  position: relative;
+  transform-origin: left center;
+  transition: transform 0.4s ease, opacity 0.32s ease;
+  backface-visibility: hidden;
+}
+.nb-page::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50px;
+  width: 1px;
+  background: var(--margin-line);
+  opacity: 0.65;
+}
+
+.nb-page.flip-out-next { transform: rotateY(-92deg); opacity: 0; }
+.nb-page.flip-out-prev { transform: rotateY(92deg);  opacity: 0; }
+.nb-page.flip-in-next  { transform: rotateY(92deg);  opacity: 0; transition: none; }
+.nb-page.flip-in-prev  { transform: rotateY(-92deg); opacity: 0; transition: none; }
+
+/* ---------- Page content elements ---------- */
+.nb-h {
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  line-height: 34px;
+  margin: 0 0 16px;
+  color: var(--ink-me);
+  font-weight: 700;
+  border-bottom: 1.5px solid rgba(31, 59, 94, 0.4);
+  padding-bottom: 6px;
+}
+.nb-p { margin: 0 0 12px; }
+.nb-arrow {
+  margin: 16px 0 0;
+  color: var(--ink-me);
+  font-style: italic;
+}
+.nb-soft { color: var(--ink-soft); }
+
+.nb-list {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+.nb-list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 6px;
+}
+.nb-list li::before {
+  content: '·';
+  position: absolute;
+  left: 6px;
+  top: -8px;
+  color: var(--margin-line);
+  font-size: 30px;
+  line-height: 1;
+}
+
+/* ---------- Highlighter ---------- */
+/* Yellow — primary answers / key insights */
+.hl {
+  background-color: var(--hl-yellow);
+  background-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--hl-yellow) 12%,
+    var(--hl-yellow) 90%,
+    transparent 100%
+  );
+  padding: 0 4px;
+  margin: 0 -2px;
+  border-radius: 1px;
+}
+/* Pink — alternate emphasis */
+.hl-pink {
+  background-color: var(--hl-pink);
+  padding: 0 4px;
+  margin: 0 -2px;
+}
+
+/* ---------- AI vs me ink ---------- */
+.ai { color: var(--ink-ai); }
+.me { color: var(--ink-me); }
+
+/* ---------- Code blocks ---------- */
+.nb-code {
+  font-family: 'Courier New', 'Courier', monospace;
+  font-size: 13px;
+  line-height: 20px;
+  color: #2a3a4f;
+  background: #f1e9d0;
+  border: 1.5px dashed #c4ad7e;
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin: 8px 0 14px;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  font-style: normal;
+}
+.nb-code .c-comment { color: #a07b3a; font-style: italic; }
+.nb-code .c-tag     { color: #5a3a8a; }
+.nb-code .c-attr    { color: #1d6b54; }
+.nb-code .c-str     { color: #a83a3a; }
+
+.nb-codelabel {
+  display: inline-block;
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin: 6px 0 2px;
+  font-style: italic;
+}
+
+/* ---------- Cover page ---------- */
+.nb-cover { text-align: center; padding-top: 70px; }
+.nb-cover h1 {
+  font-family: 'Caveat', cursive;
+  font-size: 68px;
+  line-height: 76px;
+  margin: 0 0 6px;
+  font-weight: 700;
+  color: var(--ink-me);
+}
+.nb-cover h2 {
+  font-family: 'Caveat', cursive;
+  font-size: 34px;
+  line-height: 40px;
+  margin: 0 0 30px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.nb-cover .rule {
+  color: var(--margin-line);
+  letter-spacing: 6px;
+  margin: 0 0 28px;
+  font-size: 22px;
+}
+.nb-cover .meta {
+  color: var(--ink-soft);
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+.nb-cover .sig {
+  color: var(--ink-me);
+  font-size: 24px;
+  margin-top: 56px;
+  font-family: 'Caveat', cursive;
+}
+
+/* ---------- Placeholder pages (future days) ---------- */
+.nb-placeholder {
+  text-align: center;
+  padding: 100px 20px;
+  color: var(--ink-soft);
+}
+.nb-placeholder h3 {
+  font-family: 'Caveat', cursive;
+  font-size: 34px;
+  margin: 0 0 8px;
+  font-weight: 400;
+  color: var(--ink-me);
+}
+.nb-placeholder p {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+/* ---------- Controls ---------- */
+.nb-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+.nb-btn {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  padding: 7px 20px;
+  background: var(--ctrl-bg);
+  border: 1px solid var(--ctrl-border);
+  border-radius: var(--radius-md);
+  color: var(--ctrl-text);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.05s;
+}
+.nb-btn:hover:not(:disabled) { background: var(--ctrl-bg-hover); }
+.nb-btn:active:not(:disabled) { transform: scale(0.98); }
+.nb-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.nb-counter {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--ink-soft);
+  min-width: 64px;
+  text-align: center;
+}
+
+/* ---------- Footer ---------- */
+.footnote {
+  text-align: center;
+  margin: 3rem auto 0;
+  font-family: 'Caveat', cursive;
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .nb-page { padding: 28px 18px 24px 56px; font-size: 18px; line-height: 30px; }
+  .nb-page::before { left: 40px; }
+  .nb-h { font-size: 24px; line-height: 30px; }
+  .nb-cover h1 { font-size: 54px; line-height: 60px; }
+  .nb-cover h2 { font-size: 28px; }
+  .masthead-title { font-size: 38px; }
+  .nb-tab { font-size: 16px; padding: 6px 12px 10px; }
+}
