@@ -607,9 +607,265 @@ document.write("Avg: " + (totalScore / students.length).toFixed(1));</pre>
     /* ===================== DAY 4 ===================== */
     {
       number: 4,
-      title: "TBD",
-      date: null,
-      placeholder: true
+      title: "Structured prompting & judgment",
+      date: "April 2026",
+      pages: [
+
+        /* --- Cover --- */
+        `
+        <div class="nb-cover">
+          <h1>Day 4</h1>
+          <h2>Structured prompting & judgment</h2>
+          <p class="rule">~ ~ ~ ~ ~ ~ ~</p>
+          <p class="meta">April 2026 · lab notebook</p>
+          <p class="sig">— Chops</p>
+        </div>
+        `,
+
+        /* --- Exercise 1: Role Prompting --- */
+        `
+        <h3 class="nb-h">Ex. 1 — role prompting</h3>
+        <p class="nb-p">Same question (what's a JS variable?), three different roles.</p>
+
+        <p class="nb-p"><strong>1. No role:</strong> <span class="ai">generic textbook def.
+          "container that holds data..." — accurate but flat.</span></p>
+
+        <p class="nb-p"><strong>2. Patient teacher:</strong> <span class="ai">"a variable is
+          like a labeled jar in your kitchen — you put something in, the label tells you what's
+          inside, and you can swap the contents later."</span> 3 sentences. No jargon.</p>
+
+        <p class="nb-p"><strong>3. Senior tech writer:</strong> <span class="ai">structured
+          reference w/ headers — Definition, Syntax, Example, Common Mistake. Mentioned const
+          vs let vs var, hoisting gotcha.</span></p>
+
+        <p class="nb-p"><strong>What changed:</strong></p>
+        <ul class="nb-list">
+          <li>length — teacher = 3 sentences, writer = mini docs page</li>
+          <li>tone — teacher friendly, writer crisp + neutral</li>
+          <li>example quality — <span class="hl">writer's was strongest</span> (showed all 3
+            declaration keywords + a real bug)</li>
+        </ul>
+
+        <p class="nb-arrow">→ <span class="hl">role = filter.</span> Same question, but the
+          role decides what's in scope. For me right now: teacher prompt for new concepts,
+          tech writer for things I'm trying to nail down.</p>
+        `,
+
+        /* --- Exercise 2: Constraint Prompting --- */
+        `
+        <h3 class="nb-h">Ex. 2 — constraint prompting</h3>
+        <p class="nb-p">"About me" page with a wall of constraints (colors, sections, max
+          lines, mobile, link).</p>
+
+        <span class="nb-codelabel">snippet of what AI built (line count: 47/50 ✓):</span>
+<pre class="nb-code">&lt;body style="background:#1a1a2e; color:#fff;
+             font-family:system-ui; padding:20px;
+             max-width:680px; margin:0 auto;"&gt;
+  &lt;h1 style="color:#f59e0b;"&gt;Chops&lt;/h1&gt;
+  &lt;h2 style="color:#f59e0b;"&gt;About&lt;/h2&gt;
+  &lt;p&gt;IT systems guy, 7+ yrs, pivoting to dev.&lt;/p&gt;
+  ...
+  &lt;a href="https://github.com/philay3"&gt;GitHub&lt;/a&gt;
+&lt;/body&gt;</pre>
+
+        <p class="nb-p"><strong>Verified:</strong></p>
+        <ul class="nb-list">
+          <li>under 50 lines? <span class="hl">yes — 47.</span></li>
+          <li>looks right in Replit? <span class="hl">yes.</span></li>
+          <li>readable on phone? <span class="hl">yes — max-width + padding handled it.</span></li>
+        </ul>
+
+        <p class="nb-p"><strong>My mods:</strong> swapped navy/amber for
+          <span class="hl">deep purple + mint green</span> (more me), rewrote "My Goal" →
+          "transition into a dev role with a security focus, ship one real thing every month."</p>
+
+        <p class="nb-arrow">→ <span class="hl">constraints turned a vague ask into a deliverable.</span>
+          Without them I'd have gotten 200 lines of generic Bootstrap junk.</p>
+        `,
+
+        /* --- Exercise 3: System Instructions --- */
+        `
+        <h3 class="nb-h">Ex. 3 — system instructions</h3>
+        <p class="nb-p">Wrote three. Tested all three.</p>
+
+        <p class="nb-p"><strong>A. Debug helper:</strong></p>
+<pre class="nb-code">"You are a JS debugging buddy. Before suggesting fixes, ask
+me what I expected vs what's happening. Never rewrite my whole
+file — point me to the line(s). Explain errors in plain English
+first, jargon second."</pre>
+        <p class="nb-p nb-soft">→ tested. <span class="hl">Asked me 2 questions before answering. Win.</span></p>
+
+        <p class="nb-p"><strong>B. App brainstorm:</strong></p>
+<pre class="nb-code">"Suggest exactly 5 app ideas at a time. For each: target user
+(one sentence) + difficulty 1–5. Wait for me to pick before
+expanding any."</pre>
+        <p class="nb-p nb-soft">→ stuck to format. Difficulty ratings were honest (most were 4–5).</p>
+
+        <p class="nb-p"><strong>C. Quiz mode:</strong></p>
+<pre class="nb-code">"Quiz me on this week's JS material. One question at a time.
+Wait for my answer. Then tell me right/wrong + a 1-sentence
+explanation. Move to next question only after I respond."</pre>
+        <p class="nb-p nb-soft">→ <span class="hl">caught me on === vs ==. Explanation actually landed.</span></p>
+
+        <p class="nb-arrow">→ system instructions = <span class="hl">setting the rules of the game
+          BEFORE the first move.</span> Massive difference vs. correcting tone mid-conversation.</p>
+        `,
+
+        /* --- Peer Activity: Context Comparison --- */
+        `
+        <h3 class="nb-h">peer activity — context comparison</h3>
+        <p class="nb-p">Same task: "build a landing page for a small business." Two rounds.</p>
+
+        <p class="nb-p"><strong>Round 1 — bare prompt</strong> ("build a landing page for a
+          small business")</p>
+        <p class="nb-p ai">→ generic stock-photo placeholder. "Welcome to Our Business."
+          Lorem ipsum. Could be anything.</p>
+
+        <p class="nb-p"><strong>Round 2 — full context</strong> (Paws &amp; Strolls, dog walker,
+          Marcus, prices, tagline, colors, button)</p>
+        <p class="nb-p ai">→ actually usable. Tagline in the hero, prices in a clean grid, earthy
+          green palette, Book-a-Walk button.</p>
+
+        <p class="nb-p"><strong>Specific details from the prompt that survived:</strong>
+          tagline ("Your dog's favorite part of the day"), exact prices, "5 years experience +
+          pet first aid certified" in About, green/brown palette, mobile-friendly meta tag.
+          <span class="hl">Almost every detail I gave it showed up.</span></p>
+
+        <p class="nb-arrow">→ <span class="hl">specificity in = specificity out.</span> The bare
+          prompt cost the same tokens but produced 10% of the value.</p>
+        `,
+
+        /* --- Applied Judgment Ex 1: Accept / Reject / Modify --- */
+        `
+        <h3 class="nb-h">applied judgment — accept, reject, modify?</h3>
+
+        <p class="nb-p"><strong>A. The cover letter.</strong> <span class="ai">AI wrote a
+          cover letter claiming "extensive experience" + listing React, Node, PostgreSQL,
+          Python, Java, C++, AWS, Docker, Kubernetes, ML.</span></p>
+        <p class="nb-p"><strong>Decision: <span class="hl">REJECT.</span></strong> None of that
+          stack list is true for me right now. Sending it = lying on day one. Rewrote honestly:
+          7 yrs IT (real), pivoting to dev, currently shipping projects in vanilla JS, learning
+          security. Confident but accurate.</p>
+
+        <p class="nb-p" style="margin-top:14px"><strong>B. The prime number function.</strong>
+          The optimized 6k±1 trick. Code is correct + fast.</p>
+        <p class="nb-p"><strong>Decision: <span class="hl">REJECT — ask for the simple version
+          first.</span></strong> If I can't explain why <code>i*i &lt;= num</code> works or
+          why we skip multiples of 6, I shouldn't ship it. Ask AI for the naive O(n) version,
+          understand it, THEN come back to the optimization.</p>
+
+        <p class="nb-p" style="margin-top:14px"><strong>C. Food truck app names.</strong>
+          TruckTracker, StreetEats, FoodRoamer, BiteBus, RollUp.</p>
+        <p class="nb-p"><strong>Decision: <span class="hl">MODIFY.</span></strong> "BiteBus"
+          was decent. Googled all 5 → <span class="ai">StreetEats already exists (NYC food
+          publication).</span> My pick: "Curbside" — short, owns the parking-lot vibe, .com
+          probably gone but .app might be open.</p>
+
+        <p class="nb-arrow">→ <span class="hl">accept / reject / modify is a real workflow,
+          not a checklist.</span> Default for me is modify.</p>
+        `,
+
+        /* --- Applied Judgment Ex 2: Ethics --- */
+        `
+        <h3 class="nb-h">applied judgment — ethics</h3>
+
+        <p class="nb-p"><strong>1. The fake resume.</strong> Person let AI invent projects
+          they didn't build. Got the interview. Couldn't walk through the project.</p>
+        <p class="nb-p"><strong>What went wrong:</strong> <span class="hl">AI as ghostwriter is
+          fine. AI as fact-fabricator is not.</span> The line: AI can shape MY truth, it can't
+          invent a new one. For me — I can have AI tighten a bullet about the IBM Santander
+          migration. I can't have it invent a project I didn't run.</p>
+
+        <p class="nb-p" style="margin-top:14px"><strong>2. Client website you can't fix.</strong>
+          AI shipped it, you didn't read it, six months later it breaks.</p>
+        <p class="nb-p"><strong>Min understanding to deliver responsibly:</strong> <span class="hl">
+          enough to triage when it breaks.</span> What each file does, where state lives, what
+          it depends on, how to read the error. Not every line — but enough to know which line
+          to look at.</p>
+
+        <p class="nb-p" style="margin-top:14px"><strong>3. Bias check.</strong> Asked for
+          "typical software engineer" then "typical nurse."</p>
+        <p class="nb-p"><span class="ai">Engineer → male, hoodie, glasses, late 20s, antisocial,
+          coffee.<br/>Nurse → female, scrubs, warm, caring, mid-30s.</span></p>
+        <p class="nb-p"><strong>Where it comes from:</strong> the data — <span class="hl">decades
+          of media + writing where these defaults dominate.</span> Effect: people who don't
+          match the stereotype get filtered out invisibly (resume screeners, image generators,
+          recommendation systems). It's not malice, it's averaging — but the impact lands the
+          same.</p>
+
+        <p class="nb-arrow">→ <span class="hl">AI bakes in the average and calls it normal.</span>
+          Worth checking, especially in anything that touches hiring, healthcare, or law.
+          (Specifically relevant for CoCounsel — legal AI getting bias wrong = real damage.)</p>
+        `,
+
+        /* --- Applied Judgment Ex 3: Build with Judgment --- */
+        `
+        <h3 class="nb-h">build with judgment — decision log</h3>
+        <p class="nb-p">Rebuilt the About Me page from Ex. 2. Tracked every decision.</p>
+
+        <div style="background:#f0e6cd; border:1.5px dashed #c4ad7e; border-radius:8px; padding:12px 14px; font-size:16px; line-height:24px; font-family:'Courier New',monospace; color:#2a3a4f; margin:8px 0 14px;">
+          <p style="margin:0 0 8px"><strong>OUTPUT</strong> → bio called me "expert developer"</p>
+          <p style="margin:0 0 4px"><strong>DECISION</strong> → <span class="hl">reject</span></p>
+          <p style="margin:0 0 12px"><strong>WHY</strong> → not true. "IT systems guy learning
+            to build" is honest + interesting.</p>
+
+          <p style="margin:0 0 8px"><strong>OUTPUT</strong> → skills section listing React, Node, SQL</p>
+          <p style="margin:0 0 4px"><strong>DECISION</strong> → <span class="hl">reject</span></p>
+          <p style="margin:0 0 12px"><strong>WHY</strong> → don't have those yet. Replaced w/
+            "currently learning: vanilla JS, HTML/CSS, security fundamentals."</p>
+
+          <p style="margin:0 0 8px"><strong>OUTPUT</strong> → navy/amber color scheme</p>
+          <p style="margin:0 0 4px"><strong>DECISION</strong> → <span class="hl">modify</span></p>
+          <p style="margin:0 0 12px"><strong>WHY</strong> → kept layout. Swapped to deep purple
+            + mint. My page, my taste.</p>
+
+          <p style="margin:0 0 8px"><strong>OUTPUT</strong> → semantic HTML structure
+            (header/main/section)</p>
+          <p style="margin:0 0 4px"><strong>DECISION</strong> → <span class="hl">accept</span></p>
+          <p style="margin:0 0 12px"><strong>WHY</strong> → understood every tag. Good a11y.
+            No reason to mess with it.</p>
+
+          <p style="margin:0 0 8px"><strong>OUTPUT</strong> → "Connect with me" CTA + social links</p>
+          <p style="margin:0 0 4px"><strong>DECISION</strong> → <span class="hl">modify</span></p>
+          <p style="margin:0"><strong>WHY</strong> → kept GitHub + LinkedIn. Cut Twitter (don't
+            want it tied to job search).</p>
+        </div>
+
+        <p class="nb-arrow">→ tally: 3 modifies, 2 rejects, 1 accept. <span class="hl">Almost
+          nothing made it through untouched.</span> That's the job — you're an editor with
+          taste, not a copy/paste machine.</p>
+        `,
+
+        /* --- Peer: Explain AI to Non-Technical Person --- */
+        `
+        <h3 class="nb-h">peer — explain AI to a non-technical person</h3>
+        <p class="nb-p">2 minutes. No jargon. One analogy. One strength + one weakness.</p>
+
+        <p class="nb-p"><strong>My take:</strong></p>
+        <p class="nb-p"><span class="hl">"AI is autocomplete on steroids. Your phone guesses the
+          next word in a text — AI does the same thing, but with a much bigger memory and across
+          paragraphs instead of words. It read most of the public internet, so when you ask it
+          something, it's predicting the most-likely-good answer based on every similar question
+          it's seen."</span></p>
+
+        <p class="nb-p"><strong>Good at:</strong> rewording stuff, summarizing long docs,
+          generating drafts you can edit. Anything where "close enough + you check it" works.</p>
+        <p class="nb-p"><strong>Bad at:</strong> <span class="hl">being sure.</span> It'll make
+          things up confidently — names, citations, court cases (yes really). Treat it like a
+          fast intern, not an oracle.</p>
+
+        <p class="nb-p"><strong>Partner's score:</strong></p>
+        <ul class="nb-list">
+          <li>understood it? <span class="ai">yes</span></li>
+          <li>jargon? <span class="ai">"autocomplete" — they got it but flagged it</span></li>
+          <li>strongest part? <span class="ai">"fast intern, not oracle" line</span></li>
+        </ul>
+
+        <p class="nb-arrow">→ <span class="hl">building this muscle now for the Phase 1 verbal
+          gate.</span> The "fast intern" frame works — sticky and accurate. Going to keep using it.</p>
+        `
+
+      ]
     },
 
     /* ===================== DAY 5 ===================== */
