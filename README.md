@@ -104,3 +104,4 @@ Inside `nb-code` blocks, you can use `c-comment` for arrow annotations.
 - Export to PDF
 - Sticky-note overlays for cross-references
 - Dog-ear bookmarks on important pages
+
